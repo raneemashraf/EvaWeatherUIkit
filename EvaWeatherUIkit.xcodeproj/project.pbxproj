@@ -22,6 +22,7 @@
 		7FBC2D402C5028E6005F52FE /* CitiesDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC2D3F2C5028E6005F52FE /* CitiesDetailsViewController.swift */; };
 		7FBC2D492C503BD9005F52FE /* CitiesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBC2D482C503BD9005F52FE /* CitiesTableViewCell.xib */; };
 		7FBC2D4A2C503BD9005F52FE /* CitiesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC2D472C503BD9005F52FE /* CitiesTableViewCell.swift */; };
+		7FBC2D4E2C50E4CB005F52FE /* FavouriteDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC2D4D2C50E4CB005F52FE /* FavouriteDelegation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		7FBC2D3F2C5028E6005F52FE /* CitiesDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesDetailsViewController.swift; sourceTree = "<group>"; };
 		7FBC2D472C503BD9005F52FE /* CitiesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesTableViewCell.swift; sourceTree = "<group>"; };
 		7FBC2D482C503BD9005F52FE /* CitiesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CitiesTableViewCell.xib; sourceTree = "<group>"; };
+		7FBC2D4D2C50E4CB005F52FE /* FavouriteDelegation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteDelegation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				7FBC2D232C4EA796005F52FE /* LaunchScreen.storyboard */,
 				7FBC2D262C4EA796005F52FE /* Info.plist */,
 				7FBC2D1E2C4EA794005F52FE /* EvaWeatherUIkit.xcdatamodeld */,
+				7FBC2D4D2C50E4CB005F52FE /* FavouriteDelegation.swift */,
 			);
 			path = EvaWeatherUIkit;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				7FBC2D3E2C5028BE005F52FE /* weatherRouter.swift in Sources */,
 				7FBC2D3C2C501D8F005F52FE /* WeatherPresenter.swift in Sources */,
 				7FBC2D4A2C503BD9005F52FE /* CitiesTableViewCell.swift in Sources */,
+				7FBC2D4E2C50E4CB005F52FE /* FavouriteDelegation.swift in Sources */,
 				7FBC2D2E2C4FA01A005F52FE /* WeatherData.swift in Sources */,
 				7FBC2D362C4FA76E005F52FE /* CitiesTableViewController.swift in Sources */,
 				7FBC2D162C4EA794005F52FE /* AppDelegate.swift in Sources */,

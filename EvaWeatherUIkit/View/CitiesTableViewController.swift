@@ -9,17 +9,19 @@ import UIKit
 
 protocol CitiesListViewProtocol: AnyObject {
     func updateWeatherData(for city: String, with data: WeatherData.CurrentWeather)
-    func updateFavoriteStatus(for city: String, isFavorite: Bool)
     func showError(for city: String, with error: Error)
 }
 
 
-class CitiesTableViewController: UITableViewController, CitiesListViewProtocol {
+class CitiesTableViewController: UITableViewController, CitiesListViewProtocol,FavoriteCityDelegation {
+   
+    
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     
     var presenter: CitiesListPresenterProtocol!
-    
+    var router: WeatherRouterProtocol!
+
     private var cities = ["Cairo", "Tokyo", "Madrid", "Lagos", "Moscow"]
     private var weatherData: [String: WeatherData.CurrentWeather] = [:]
     private var favorites: [String: Bool] = [:]
@@ -32,13 +34,25 @@ class CitiesTableViewController: UITableViewController, CitiesListViewProtocol {
         
         let interactor = WeatherInteractor()
         let presenter = CitiesListPresenter()
+        let router = WeatherRouter()
+        
         self.presenter = presenter
+        self.router = router
+
         presenter.interactor = interactor
+        presenter.router = router
         interactor.presenter = presenter as? WeatherInteractorOutputProtocol
         presenter.view = self
         fetchWeathers()
+        router.favoriteCityDelegate = self
     }
-
+    
+    func didChangeFavoriteStatus(for city: String, isFavorite: Bool) {
+        DispatchQueue.main.async {
+            self.favorites[city] = isFavorite
+            self.tableView.reloadData()
+        }
+    }
     
     
     func updateWeatherData(for city: String, with data: WeatherData.CurrentWeather) {
@@ -49,15 +63,8 @@ class CitiesTableViewController: UITableViewController, CitiesListViewProtocol {
         }
     }
 
-
-    
-    func updateFavoriteStatus(for city: String, isFavorite: Bool) {
-        favorites[city] = isFavorite
-        tableView.reloadData()
-    }
     
     func showError(for city: String, with error: Error) {
-        // Handle error (e.g., show an alert)
     }
     
     // MARK: - Table view data source
@@ -79,37 +86,28 @@ class CitiesTableViewController: UITableViewController, CitiesListViewProtocol {
         
         cell.cityLabel.text = city
         if let weather = weatherData[city] {
-                cell.tempLabel.text = "\(weather.temperature_2m)°C"
-                print("Setting temp for \(city): \(weather.temperature_2m)°C")
-            } else {
-                cell.tempLabel.text = "Temp: N/A"
-                print("No weather data for \(city)")
+                cell.tempLabel.text = "\(Int(weather.temperature_2m))°C"
+
             }
         print("Temp: \(weatherData[city]?.temperature_2m)°C")
+        cell.favLabel.image = favorites[city] == true ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+
         return cell
     }
 
-    // Handle row selection to navigate to the detailed weather screen
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            let city = cities[indexPath.row]
-            let weather = weatherData[city]
-
-            // Instantiate the detail view controller
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let detailVC = storyboard.instantiateViewController(withIdentifier: "CitiesDetailsViewController") as? CitiesDetailsViewController {
-                // Pass data to the detail view controller
-                detailVC.city = city
-                detailVC.weatherData = weather
-               // detailVC.isFavorite = favorites[city] ?? false
-                
-                // Push the detail view controller
-                navigationController?.pushViewController(detailVC, animated: true)
-            }
+        let city = cities[indexPath.row]
+        if let weather = weatherData[city] {
+            router.navigateToWeatherDetail(from: self, for: city, with: weather)
         }
+    }
 
     private func fetchWeathers() {
         for (index, city) in cities.enumerated() {
             presenter.didSelectCity(at: index)
         }
     }
+    
+   
+    
 }

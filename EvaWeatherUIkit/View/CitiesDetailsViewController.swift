@@ -17,7 +17,10 @@ class CitiesDetailsViewController: UIViewController {
     @IBOutlet weak var temprtureLabel: UILabel!
     @IBOutlet weak var cityName: UILabel!
     
-    
+    var delegate: FavoriteCityDelegation?
+    var isFavorite: Bool = false
+    var cityIndex: Int = 0
+
     var city: String?
     var weatherData: WeatherData.CurrentWeather?
     var presenter: CitiesListPresenterProtocol!
@@ -34,9 +37,14 @@ class CitiesDetailsViewController: UIViewController {
         visibilityLabel.text = "Visibility: \(weather.visibility) meters"
         windLabel.text = "Wind: \(weather.wind_speed_10m)m"
 
-//        let isFavorite = presenter.fa(city: city ?? "")
-//        favoriteButton.setTitle(isFavorite ? "Unfavorite" : "Favorite", for: .normal)
         
+    }
+    
+    @IBAction func favouriteAction(_ sender: Any) {
+        isFavorite = !isFavorite
+        let favImage = isFavorite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+        favBtn.setImage(favImage, for: .normal)
+        delegate?.didChangeFavoriteStatus(for: city ?? "", isFavorite: isFavorite)
     }
     
     private func setBackground() {

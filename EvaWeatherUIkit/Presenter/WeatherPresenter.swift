@@ -8,13 +8,15 @@
 import Foundation
 
 protocol CitiesListPresenterProtocol: AnyObject {
+    var interactor: WeatherInteractorInputProtocol? { get set }
+    var router: WeatherRouterProtocol? { get set }
     func didSelectCity(at index: Int)
-    func setCityFavorite(_ city: String, isFavorite: Bool)
 }
 
 class CitiesListPresenter: CitiesListPresenterProtocol {
     weak var view: CitiesListViewProtocol?
     var interactor: WeatherInteractorInputProtocol?
+    var router: WeatherRouterProtocol?
     
     private var cities = ["Cairo", "Tokyo", "Madrid", "Lagos", "Moscow"]
     private var favorites: [String: Bool] = [:]
@@ -27,10 +29,7 @@ class CitiesListPresenter: CitiesListPresenterProtocol {
         }
     }
 
-    func setCityFavorite(_ city: String, isFavorite: Bool) {
-        favorites[city] = isFavorite
-        view?.updateFavoriteStatus(for: city, isFavorite: isFavorite)
-    }
+ 
 
     private func getCityCoordinates(for city: String) -> (latitude: Double, longitude: Double)? {
         switch city {
@@ -52,7 +51,6 @@ extension CitiesListPresenter: WeatherInteractorOutputProtocol {
             view.updateWeatherData(for: city, with: data)
         }
     }
-
 
     func didFailToFetchWeatherData(for city: String, with error: Error) {
         view?.showError(for: city, with: error)
