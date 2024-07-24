@@ -14,7 +14,8 @@ class CitiesTableViewCell: UITableViewCell {
     @IBOutlet weak var cityLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
