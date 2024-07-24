@@ -14,7 +14,7 @@ class CitiesDetailsViewController: UIViewController {
     @IBOutlet weak var visibilityLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var rainLabel: UILabel!
-    @IBOutlet weak var TemprtureLabel: UILabel!
+    @IBOutlet weak var temprtureLabel: UILabel!
     @IBOutlet weak var cityName: UILabel!
     
     
@@ -24,11 +24,11 @@ class CitiesDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setBackground()
         
         guard let weather = weatherData else { return }
         
-        TemprtureLabel.text = "temp \(weather.temperature_2m)°C"
+        temprtureLabel.text = " \(Int(weather.temperature_2m))°C"
         humidityLabel.text = "Humidity: \(weather.relative_humidity_2m)%"
         rainLabel.text = "Rain: \(weather.rain)mm"
         visibilityLabel.text = "Visibility: \(weather.visibility) meters"
@@ -39,15 +39,14 @@ class CitiesDetailsViewController: UIViewController {
         
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    private func setBackground() {
+            let backgroundImage = UIImage(named: "background")
+            let backgroundImageView = UIImageView(frame: UIScreen.main.bounds)
+            backgroundImageView.image = backgroundImage
+            backgroundImageView.contentMode = .scaleAspectFill
+            backgroundImageView.clipsToBounds = true
+            self.view.insertSubview(backgroundImageView, at: 0)
+        }
+    
 
 }
